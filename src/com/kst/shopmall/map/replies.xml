@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="replies">
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO replies(no,nickName,content,regdate,grade,user_no,item_no)
+		VALUES(replies_seq.nextval,#{nickName},#{content},systimestamp,#{grade},#{userNo},#{itemNo})
+	</insert>
+	
+	<!-- 댓글 뿌리기 -->
+	<select id="selectListReplies" parameterType="int" resultType="Reply">
+		SELECT row_number() over(order by r.regdate desc) replyNo,r.nickname,r.content,r.regdate,r.grade
+		FROM replies r, items i
+		WHERE r.item_no = i.no AND i.no = #{no}
+	</select>
+	
+	<!-- 상품 평점 -->
+	<select id="selectAvgGrade" parameterType="int" resultType="int">
+		SELECT trunc(sum(r.grade)/count(*),1)
+		FROM replies r,items i
+		WHERE r.item_no = i.no AND i.no = #{no}
+	</select>
+</mapper>

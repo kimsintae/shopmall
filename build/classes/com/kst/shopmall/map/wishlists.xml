@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wishlists">
+	
+	<insert id="insertWishList" parameterType="WishList">
+		INSERT INTO WISHLIST
+		VALUES(wishlist_seq.nextval,#{name},#{image},#{price},systimestamp,#{userNo},#{itemNo})
+	</insert>
+	
+	<select id="selectListWish" parameterType="int" resultType="WishList">
+		SELECT w.no,w.name,w.image,replace(w.price,',','') price, w.regdate, w.user_no,item_no itemNo
+		FROM wishlist w, users u
+		WHERE w.user_no = u.no AND u.no = #{no}
+	</select>
+	
+	<select id="selectOneWish" parameterType="WishList" resultType="WishList">
+		SELECT *
+		FROM  wishlist
+		WHERE name = #{name} And user_no = #{userNo}
+	</select>
+	
+	<delete id="deleteWish" parameterType="hashmap">
+		DELETE wishlist
+		WHERE no IN 
+		<foreach collection="checked" item="check" open="(" close=")" separator=",">
+				#{check}
+		</foreach>
+
+	</delete>
+	
+</mapper>

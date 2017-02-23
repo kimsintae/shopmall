@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderClients">
+
+	<!-- 주문INSERT -->
+	<insert id="insertOrderClient" parameterType="OrderClient">
+	    
+	INSERT INTO order_client(no,order_code,orderer,recipient,phone,main_address,detail_address,post_code,regdate,user_no)
+	VALUES(order_client_seq.nextval,#{orderCode},#{orderer},#{recipient},#{phone},#{mainAddress},#{detailAddress},#{postCode},systimestamp,#{userNo})
+	 	
+	 	<selectKey resultType="String" keyProperty="orderCode" order="AFTER">
+	            SELECT order_Code 
+	            FROM order_client        
+	            WHERE order_code = #{orderCode}
+	    </selectKey>
+	</insert>
+	
+	
+</mapper>

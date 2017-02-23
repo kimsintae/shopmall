@@ -1,0 +1,260 @@
+        *:focus {
+            outline: none;
+        }
+        
+        body{
+           background-color: white;
+           font: 81.3% Verdana, "돋움", Dotum, sans-serif;
+        }
+
+         #header{
+            margin-top: 10px;
+        }
+    
+        #logoAndSearchWrap{
+            /*background: blue;*/
+            width: 1200px;
+            height: 100px;
+            margin: auto;
+            position: relative;
+        }
+        .user_nickname{
+            color: coral;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 15px;
+        }
+        .user_nickname:hover{
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        #logo{
+            height: 100px;
+            width: 200px;
+            /*background: yellow;*/
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 100px;
+            font-size: 50px;   
+        }
+        #logo a{
+            text-decoration: none;
+            color: black;
+            font-family: 'Bad Script', cursive;
+        }
+        
+        #searchbox{
+            display: inline-block;
+            vertical-align: middle;
+            height: 40px;
+            width: 600px;
+            margin-left: 90px;
+            font-size: 20px;
+            border: 1px solid #424242;
+        }
+        #searchbox:focus{
+            box-shadow: 1px 1px 10px #84FFFF;
+        }
+        #searchBtn{
+            height: 42.5px;
+            width: 50px;
+            margin-left: -55px;
+            border: none;
+            background-color: darkcyan;
+            border-radius: 5px 0 0px 5px;
+            vertical-align: middle;
+        }
+        #searchBtn:hover{cursor: pointer;}
+        #searchBtn .fa-search{font-size: 25px;} 
+        
+        #resultbox{
+        	width: 543px;
+        	background: white;
+        	position: absolute;
+        	top:75px;
+        	right: 360px;
+        	z-index: 1;
+        	border: 1px solid #424242;
+        	border-top: none;
+        	display: none;
+        }
+        #resultbox.block{display: block;}
+        #resultbox ul{/* background: red; */}
+        #resultbox ul li{
+        	width: 540px;
+        	margin: 10px 0;
+        }
+        #resultbox ul li:hover{background: #E0E0E0;}
+        
+        .search_item_name{
+        	font-size: 20px;
+        	text-decoration: none;
+        	color:black;
+        }
+        
+        #menuBarWrap{
+            height: 50px;
+            background: #BDBDBD;
+            margin-top: 15px;
+        }
+        
+        #menuBarWrap #menu{
+            margin: auto;
+            width: 1000px;
+        }
+    
+        #menuBarWrap #menu li{
+            float: left;
+            /*background-color: blue;*/
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            position: relative;
+        }
+
+        #menuBarWrap #menu li a,#logoutBtn{
+            text-decoration: none;
+            transition: ease .2s;
+            color: black;
+            font-weight: 800;
+            display: block;
+            width: 199px;
+            height: 50px;
+            transition: ease .3s;
+            
+        }
+        
+        #logoutBtn{
+        	background: none;
+        	border: none;
+        	font-size:20px;
+        }
+        
+        #logoutBtn:hover{
+        	cursor: pointer;
+        }
+
+        #menSubMenuWrap,#womenSubMenuWrap,#kidsSubMenuWrap{
+            width: 200px;
+            min-height: 100px;
+            background-color: white;
+            position: absolute;
+            padding-top: 10px;
+            display: none;
+        }
+
+        #menuBarWrap #menu li a.color{
+            color: red;
+            cursor: pointer;
+        }
+
+        .sub_menu{
+            border: 1px solid #424242;
+            border-top: none;
+            z-index:2;
+        }
+        #menSubMenuWrap{
+            left: 0px;
+            top: 50px;
+
+        }
+        #womenSubMenuWrap{
+            left: 0px;
+            top: 50px;
+        }
+        
+        #kidsSubMenuWrap{
+            left: 0px;
+            top: 50px;
+        }
+
+        #menSubMenuWrap.on,#womenSubMenuWrap.on,#kidsSubMenuWrap.on{
+            display: block;
+        }
+        #menSubMenu li,#womenSubMenu li,#kidsSubMenu li{
+            width: 200px;
+            text-align: center;
+            font-size: 25px;
+        }
+        
+       .sub_menu a{
+            text-decoration: none;
+            color: black;
+            display: block;
+            width: 200px;
+            height: 50px;
+            /*background-color: firebrick;*/
+            line-height: 50px;
+        }
+        #kidsSubMenuWrap #kidsSubMenu> li a:hover,#menSubMenuWrap #menSubMenu> li a:hover,#womenSubMenuWrap #womenSubMenu> li a:hover{
+            color: red;
+        }
+        
+        #footer{
+            border-top: 1px solid #424242;
+            margin-top: 10px;
+        }
+
+        #footer #policy {
+        height: 100px;
+        line-height: 100px;
+        background-color: white;
+        position: relative;
+        }
+        
+        #policy ul {
+            width: 700px;
+            margin: auto;
+        }
+        
+        #footer #policy li {
+            display: inline;
+            font-size: 15px;
+            border-left: 1px solid #424242;
+            padding-left: 5px;
+            margin-left: 4px;
+        }
+        
+        #footer #policy li:hover {
+            text-decoration: underline;
+        }
+        
+        #footer #policy li:first-child {
+            border: none;
+        }
+        
+        #footer #policy a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        #footer #policy strong {
+            font-weight: 700;
+        }
+        
+        #footer #policy address {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        #footer #policy address a {
+            height: 40px;
+            display: inline-block;
+            line-height: 40px;
+            color: black;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        #sideBarWrap{
+            position: fixed;
+            width: 120px;
+            height: 400px;
+            background: blue;
+            right: 50px;
+            bottom: 230px;
+            display: none;
+        }
+        

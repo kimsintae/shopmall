@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemColors">
+	
+	<select id="selectColors" parameterType="int" resultType="ItemColor">
+		SELECT io.item_color itemColor,color_name colorName
+		FROM items i, item_colors io
+		WHERE i.no=io.item_no AND i.no = #{no}
+	</select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC 
+"-mybatis.org/DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+<!-- DB연결 환경설정 -->
+<typeAliases>
+	<typeAlias type="com.kst.shopmall.vo.Cart" alias="Cart"/>
+	<typeAlias type="com.kst.shopmall.vo.Item" alias="Item"/>
+	<typeAlias type="com.kst.shopmall.vo.ItemColor" alias="ItemColor"/>
+	<typeAlias type="com.kst.shopmall.vo.ItemImage" alias="ItemImage"/>
+	<typeAlias type="com.kst.shopmall.vo.ItemSize" alias="ItemSize"/>
+	<typeAlias type="com.kst.shopmall.vo.Like" alias="Like"/>
+	<typeAlias type="com.kst.shopmall.vo.OrderClient" alias="OrderClient"/>
+	<typeAlias type="com.kst.shopmall.vo.OrderItem" alias="OrderItem"/>
+	<typeAlias type="com.kst.shopmall.vo.Reply" alias="Reply"/>
+	<typeAlias type="com.kst.shopmall.vo.User" alias="User"/>
+	<typeAlias type="com.kst.shopmall.vo.WishList" alias="WishList"/>
+</typeAliases>
+
+<mappers>
+	<mapper resource="com/kst/shopmall/map/cart.xml"/>
+	<mapper resource="com/kst/shopmall/map/itemColors.xml"/>
+	<mapper resource="com/kst/shopmall/map/itemImages.xml"/>
+	<mapper resource="com/kst/shopmall/map/items.xml"/>
+	<mapper resource="com/kst/shopmall/map/itemSize.xml"/>
+	<mapper resource="com/kst/shopmall/map/likes.xml"/>
+	<mapper resource="com/kst/shopmall/map/orderClients.xml"/>
+	<mapper resource="com/kst/shopmall/map/orderItems.xml"/>
+	<mapper resource="com/kst/shopmall/map/replies.xml"/>
+	<mapper resource="com/kst/shopmall/map/users.xml"/>
+	<mapper resource="com/kst/shopmall/map/wishlists.xml"/>
+</mappers>
+
+<!-- mapper 경로 설정 -->
+
+</configuration>

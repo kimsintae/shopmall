@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="items">
+
+
+<!-- 남자 핫아이템 -->
+	<select id="selectTop9" resultType="Item">
+		SELECT no,name,price,image,ROW_NUMBER() OVER(ORDER BY heart DESC) heart
+		FROM(SELECT i.no,i.name,count(name) heart,price,image 
+   			 FROM items i
+			 LEFT OUTER JOIN likes l ON ( i.no = l.item_no )
+			 LEFT OUTER JOIN item_images ii ON ( i.no = ii.item_no )
+	         WHERE i.cloth_type2 = 'M' AND ii.type='M'
+             GROUP by i.no,name,price,image)
+		WHERE rownum between 1 and 9  
+	</select>
+	
+<!-- 여자 핫아이템 -->
+	<select id="selectWTop9" resultType="Item">
+		SELECT no,name,price,image,ROW_NUMBER() OVER(ORDER BY heart DESC) heart
+		FROM(SELECT i.no,i.name,count(name) heart,price,image 
+   			 FROM items i
+			 LEFT OUTER JOIN likes l ON ( i.no = l.item_no )
+			 LEFT OUTER JOIN item_images ii ON ( i.no = ii.item_no )
+	         WHERE i.cloth_type2 = 'W' AND ii.type='M'
+             GROUP by i.no,name,price,image)
+		WHERE rownum between 1 and 9  
+	</select>
+	
+<!-- 아동 핫아이템 -->
+	<select id="selectKTop9" resultType="Item">
+		SELECT no,name,price,image,ROW_NUMBER() OVER(ORDER BY heart DESC) heart
+		FROM(SELECT i.no,i.name,count(name) heart,price,image 
+   			 FROM items i
+			 LEFT OUTER JOIN likes l ON ( i.no = l.item_no )
+			 LEFT OUTER JOIN item_images ii ON ( i.no = ii.item_no )
+	         WHERE i.cloth_type2 = 'K' AND ii.type='M'
+             GROUP by i.no,name,price,image)
+		WHERE rownum between 1 and 9  
+	</select>		
+	
+	
+	<!-- 상품 디테일(이미지) -->
+	<select id="selectAllImage" parameterType="int" resultType="Item">
+		SELECT i.no,i.name,ii.image
+		FROM item_images ii, items i
+		WHERE ii.item_no =i.no AND i.no = #{no} AND ii.type='D'
+	</select>
+	
+	<!-- 상품 디테일(이름,가격,메인이미지) -->
+	<select id="selectItem" parameterType="int" resultType="Item">
+		SELECT i.no,i.name,i.price,i.grade,ii.image,i.cloth_type2 clothType2,i.cloth_type clothType
+		FROM item_images ii, items i
+		WHERE ii.item_no = i.no AND i.no = #{no} AND ii.type='M'		
+	</select>
+	
+	
+	<!-- 총 상품 수 -->
+	<select id="selectTotalItem" parameterType="Item" resultType="int">
+				<!-- ct2와ct의 파라미터가 둘다 넘어올때 -->
+				SELECT count(*)
+				FROM items
+				WHERE 
+		<choose>
+			<when test="clothType2!=null and clothType!=null">
+					   cloth_type2 = #{clothType2} 
+					  And cloth_type = #{clothType}			
+			</when>
+			
+			<otherwise>
+				       cloth_type2 = #{clothType2}
+			</otherwise>
+		</choose>
+
+	</select>
+	
+	<!-- 상품리스트 -->
+	<select id="selectListType" parameterType="Item" resultType="Item">
+	
+			SELECT no,name,price,image
+			FROM(SELECT no,name,price,image,rownum r
+					FROM(SELECT i.no no,i.name name,price,ii.image image
+						FROM items i, item_images ii
+						WHERE i.no = ii.item_no 
+						AND ii.type='M'
+					<choose>
+						<when test="clothType2!=null and clothType!=null">
+								  AND i.cloth_type2 = #{clothType2} 
+								  AND i.cloth_type = #{clothType}			
+						</when>
+						
+						<otherwise>
+							      AND i.cloth_type2 = #{clothType2}
+						</otherwise>
+					</choose>
+					
+                    <trim prefix="ORDER BY"> 
+                        <if test="orderBy == 'recentItem'">  no ASC </if>
+                        <if test="orderBy == 'lowPrice'">  TO_NUMBER(price) ASC </if>                        
+                        <if test="orderBy == 'highPrice'"> TO_NUMBER(price) DESC </if>                        
+                    </trim>
+					))
+			WHERE r BETWEEN #{start} AND #{end}
+	</select> 
+	
+	<!-- 상품 검색 리스트 창 -->
+	<select id="selectSearchItem" parameterType="String" resultType="Item">
+		SELECT no,name
+		FROM items
+		WHERE upper(name) LIKE '%'||upper(#{name})||'%'
+	</select>
+	
+	
+</mapper>

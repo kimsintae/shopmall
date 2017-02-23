@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cart">
+	<insert id="insertCart" parameterType="Cart">
+		INSERT INTO cart(no,name,price,item_color,item_size,quantity,image,user_no,item_no,total_price)
+		VALUES(cart_seq.nextval,#{name},#{price},#{itemColor},#{itemSize},#{quantity},#{image},#{userNo},#{itemNo},#{totalPrice})			
+	</insert>
+	
+	<select id="selectCart" parameterType="int" resultType="Cart">
+		SELECT c.no,c.name,price,c.item_color itemColor,item_size itemSize,quantity,c.image,item_no itemNo,total_price totalPrice
+		FROM cart c, users u
+		WHERE c.user_no = u.no AND u.no = #{no}
+	</select>
+	
+	
+	<!-- 선택한 아이템 구매하기 -->
+	<select id="selectCheckedItem" parameterType="hashmap" resultType="Cart">
+		SELECT no,name,price,item_color itemColor,item_size itemSize,quantity,image,user_no userNo,item_no itemNo,total_price totalPrice
+		FROM CART
+		WHERE no IN 
+		<foreach collection="checked" item="check" open="(" close=")" separator=",">
+		#{check}
+		</foreach>	
+	</select>
+
+	<!--장바구니 총합계 / 총 수량  -->
+	<select id="selectTotal" parameterType="int" resultType="Cart">
+		SELECT sum(total_price) totalPrice,sum(quantity) quantity
+		FROM cart
+		WHERE user_no = #{userNo}
+	</select>
+	
+	<!-- 장바구니 수량 업데이트 -->
+	<update id="updateQuantity" parameterType="Cart">
+		UPDATE CART 
+		SET QUANTITY = #{quantity}, total_price = price * #{quantity} 
+		WHERE NO=#{no}
+	</update>
+	
+	
+	<!-- 결제시 장바구니 삭제 -->
+	<delete id="deleteCart" parameterType="hashmap">
+	delete cart
+	where no IN
+	<foreach collection="no" item="itemNo" open="(" close=")" separator=",">
+		#{itemNo}
+	</foreach>
+
+	</delete>
+	
+	
+	
+</mapper>

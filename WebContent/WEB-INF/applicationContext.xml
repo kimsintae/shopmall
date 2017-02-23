@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+<!-- 스프링 프레임워크 자체 설정 하는 곳
+	 빈 와이어링(빈 묶기)
+ -->
+
+<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/oraclexe "></jee:jndi-lookup>
+
+<!-- DataSource(커넥션풀) 설정 -->
+<bean id="dataSource" 
+p:driverClassName="oracle.jdbc.OracleDriver"
+p:username="shopmall"
+p:password="1234"
+p:url="jdbc:oracle:thin:@localhost:1521:xe"
+class="org.springframework.jdbc.datasource.DriverManagerDataSource"/>
+
+<!-- SqlSessionFactory 팩토리 -->
+<bean id="SqlSessionFactory"
+p:configLocation="WEB-INF/mybatis-config.xml"
+p:dataSource-ref="dataSource"
+class="org.mybatis.spring.SqlSessionFactoryBean"/>
+
+<!-- SqlSessionTemplate(편리한기능) -->
+<bean id="sqlSession"
+class="org.mybatis.spring.SqlSessionTemplate">
+<constructor-arg ref="SqlSessionFactory"></constructor-arg>
+</bean>
+
+<!-- 주입이 될때는 id가 있어야한다. id로 주입시킨다. -->
+<bean id="shopDAO" p:session-ref="sqlSession" class="com.kst.shopmall.dao.ShopDAOImpl"></bean>
+<!-- 패키지명.Impl -->
+<bean id="shopService" p:shopDAO-ref="shopDAO" class="com.kst.shopmall.service.ShopServiceImpl"></bean>
+
+<!-- 페이지 util 빈 등록-->
+<bean id="paginateUtil" class="com.kst.shopmall.util.PaginateUtil"></bean>
+
+
+
+</beans>
